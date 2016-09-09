@@ -15,7 +15,7 @@ from ..models import (
     get_session_factory,
     get_tm_session,
     )
-from ..models import Subscriber, Category
+from ..models import Admin, Subscriber, Category
 
 
 def usage(argv):

@@ -1,3 +1,0 @@
-[run]
-source = subscriptions
-omit = subscriptions/test*

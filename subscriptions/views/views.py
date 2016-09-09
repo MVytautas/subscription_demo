@@ -6,12 +6,11 @@ from sqlalchemy.exc import DBAPIError
 from ..models import Subscriber, Category
 
 from email_validator import validate_email, EmailNotValidError
-from pyramid.httpexceptions import HTTPFound
 
 @view_config(route_name='register_view', renderer='../templates/register.jinja2')
 def register_view(request):
     
-    categories = request.dbsession.query(Category)
+    categories = request.dbsession.query(Category).all()
     return {'categories': categories, 'errors':False, 'success':False}
 
 @view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
@@ -58,39 +57,18 @@ def register_received_view(request):
             return Response(db_err_msg, content_type='text/plain', status=500)
         return {'categories': categories, 'errors':False, 'success':True}
 
-@view_config(route_name='list_view_unordered', renderer='../templates/list.jinja2')
-def list_view_unordered(request):
-    subscriptions = request.dbsession.query(Subscriber).all()
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
 
 @view_config(route_name='list_view', renderer='../templates/list.jinja2')
 def list_view(request):
-    orderBy = request.matchdict['orderBy']
-    if orderBy=='date':
-        subscriptions = request.dbsession.query(Subscriber).order_by("registered desc").all()
-    elif orderBy=='email':
-        subscriptions = request.dbsession.query(Subscriber).order_by("email").all()
-    else:
-        subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
-
-@view_config(route_name='delete', renderer='../templates/list.jinja2')
-def delete(request):
-    id_delete = request.matchdict['id']
-    query = request.dbsession.query(Subscriber) 
-    sub = query.filter(Subscriber.id == id_delete).first()  
-    request.dbsession.delete(sub)
-    subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-    return HTTPFound(location='/list')
+    
+    subscriptions = request.dbsession.query(Subscriber).all()
     return {'subscriptions': subscriptions, 'errors':False, 'success':False}
-
 
 
 
 @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
 def my_view(request):
     return {'one': 'one', 'project': 'subscriptions'}
-
 
 
 db_err_msg = """\

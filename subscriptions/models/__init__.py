@@ -5,7 +5,7 @@ import zope.sqlalchemy
 
 # import or define all models here to ensure they are attached to the
 # Base.metadata prior to any initialization routines
-from .models import Subscriber, Category  # noqa
+from .models import Subscriber, Category, Admin  # noqa
 
 # run configure_mappers after defining all of the models to ensure
 # all relationships can be setup

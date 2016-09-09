@@ -19,6 +19,12 @@ association_table = Table('association', Base.metadata,
     Column('categories_id', Integer, ForeignKey('categories.id'))
 )
 
+class Admin(Base):
+    __tablename__ = 'admin'
+    id = Column(Integer, primary_key=True)
+    login = Column(Text)
+    password = Column(Text)
+
 class Subscriber(Base):
     __tablename__ = 'subscribers'
     id = Column(Integer, primary_key=True)
@@ -31,4 +37,5 @@ class Subscriber(Base):
 class Category(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
-    name = Column(Text) 
+    name = Column(Text)
+
