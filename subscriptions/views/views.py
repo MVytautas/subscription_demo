@@ -52,7 +52,7 @@ def register_received_view(request):
         except DBAPIError:
 
             return Response(db_err_msg, content_type='text/plain', status=500)
-        return {'categories': categories, errors:False}
+        return {'categories': categories, 'errors':False}
 
 
 @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
