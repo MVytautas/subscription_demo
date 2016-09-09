@@ -77,10 +77,8 @@ def list_view(request):
 @view_config(route_name='delete', renderer='../templates/list.jinja2')
 def delete(request):
     id_delete = request.matchdict['id']
-    query = request.dbsession.query(Category) 
-    sub = query.filter(Subscriber.id == id_delete).first() 
-    print (sub)
-    print ('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    query = request.dbsession.query(Subscriber) 
+    sub = query.filter(Subscriber.id == id_delete).first()  
     request.dbsession.delete(sub)
     subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
     return HTTPFound(location='/list')
