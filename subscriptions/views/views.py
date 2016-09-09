@@ -11,7 +11,7 @@ from email_validator import validate_email, EmailNotValidError
 def register_view(request):
     
     categories = request.dbsession.query(Category).all()
-    return {'categories': categories, 'errors':False}
+    return {'categories': categories, 'errors':False, 'success':False}
 
 @view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
 def register_received_view(request):
@@ -52,7 +52,7 @@ def register_received_view(request):
         except DBAPIError:
 
             return Response(db_err_msg, content_type='text/plain', status=500)
-        return {'categories': categories, 'errors':False}
+        return {'categories': categories, 'errors':False, 'success':True}
 
 
 @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')

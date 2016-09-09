@@ -24,8 +24,12 @@
   </head>  
   <form id="register" method="POST" action="register_received">
     <div id="details">
-      <h3>Enter your details to subscribe</h3>
-      <h5>Choose at least one category</h5>
+      <h3>Enter your details to subscribe</h3> 
+      {% if success %}
+        <h5 id="success">Subscribed!</h5>
+      {% else %}
+        <h5>Choose at least one category</h5>
+      {% endif %}
       <div>
         {% if errors.name %}
             <span class="error"> {{errors.name}}!</span> 

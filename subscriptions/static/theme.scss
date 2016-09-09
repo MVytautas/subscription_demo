@@ -184,7 +184,13 @@ p {
 .error{
   color:red;
 }
-
+#success{
+    position: relative;
+    top: 1em;
+    left: 3em;
+    color: green;
+    font-size: 1.4em;
+}
 #register{
   min-width:400px;
   #details{
