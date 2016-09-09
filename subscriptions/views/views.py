@@ -5,27 +5,54 @@ from sqlalchemy.exc import DBAPIError
 
 from ..models import Subscriber, Category
 
+from email_validator import validate_email, EmailNotValidError
+
 @view_config(route_name='register', renderer='../templates/register.jinja2')
 def register_view(request):
     
-    categories = request.dbsession.query(Category).all()  
-    return {'categories': categories}
+    categories = request.dbsession.query(Category).all()
+    return {'categories': categories, 'errors':False}
 
-@view_config(route_name='register_received_view')
+@view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
 def register_received_view(request):
+    
+    categories = request.dbsession.query(Category).all() 
+
     name = request.params['name']
     email = request.params['email'] 
-    categories = request.params.getall('categories') 
+    categories_chosen = request.params.getall('categories') 
+    
+    #validate inputs
+    errors = {}
+    if len(name)<1:
+        errors['name']="You must provide a name longer than 1 character"
+    if len(categories_chosen)<1:
+        errors['cats']="You must choose at least 1 category"
+
     try:
-        new_subscriber = Subscriber(name=name, email=email)
-        for cat in categories:
-            query = request.dbsession.query(Category)
-            category = query.filter(Category.name == cat).first()
-            new_subscriber.categories.append(category)
-        request.dbsession.add(new_subscriber)
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return Response('OK')
+        v = validate_email(email) # validate and get info
+        email = v["email"] # replace with normalized form
+    except EmailNotValidError as e:
+        # email is not valid, exception message is human-readable
+        errors['email']="Enter a valid email" 
+
+    if errors!={}:
+        # show the errors and retain the inputs
+        return {'errors': errors, 'name': name, 'email':email, 'categories_chosen':categories, 'categories': categories }
+    else:
+        # if inputs correct, try to save subscription and load a fresh form
+
+        try: 
+            new_subscriber = Subscriber(name=name, email=email) 
+            for cat in categories_chosen:
+                query = request.dbsession.query(Category) 
+                category = query.filter(Category.name == cat).first() 
+                new_subscriber.categories.append(category)
+            request.dbsession.add(new_subscriber)
+        except DBAPIError:
+
+            return Response(db_err_msg, content_type='text/plain', status=500)
+        return {'categories': categories}
 
 
 @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
