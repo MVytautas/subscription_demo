@@ -55,50 +55,7 @@ p {
   float: right;
   right: 0;
   margin-top: 125px;
-}
-.starter-template .links ul {
-  display: block;
-  padding: 0;
-  margin: 0;
-}
-.starter-template .links ul li {
-  list-style: none;
-  display: inline;
-  margin: 0 10px;
-}
-.starter-template .links ul li:first-child {
-  margin-left: 0;
-}
-.starter-template .links ul li:last-child {
-  margin-right: 0;
-}
-.starter-template .links ul li.current-version {
-  color: #f2b7bd;
-  font-weight: 400;
-}
-.starter-template .links ul li a, a {
-  color: #f2b7bd;
-  text-decoration: underline;
-}
-.starter-template .links ul li a:hover, a:hover {
-  color: #ffffff;
-  text-decoration: underline;
-}
-.starter-template .links ul li .icon-muted {
-  color: #eb8b95;
-  margin-right: 5px;
-}
-.starter-template .links ul li:hover .icon-muted {
-  color: #ffffff;
-}
-.starter-template .copyright {
-  margin-top: 10px;
-  font-size: 0.9em;
-  color: #f2b7bd;
-  text-transform: lowercase;
-  float: right;
-  right: 0;
-}
+} 
 @media (max-width: 1199px) {
   .starter-template .content h1 {
     font-size: 45px;
@@ -183,6 +140,12 @@ p {
 
 .error{
   color:red;
+}
+#delete a{
+    text-decoration: none;
+    color: red;
+    font-weight: 700;
+    margin-left: 2em;
 }
 #success{
     position: relative;

@@ -6,6 +6,7 @@ from sqlalchemy.exc import DBAPIError
 from ..models import Subscriber, Category
 
 from email_validator import validate_email, EmailNotValidError
+from pyramid.httpexceptions import HTTPFound
 
 @view_config(route_name='register_view', renderer='../templates/register.jinja2')
 def register_view(request):
@@ -73,12 +74,25 @@ def list_view(request):
         subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
     return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
 
+@view_config(route_name='delete', renderer='../templates/list.jinja2')
+def delete(request):
+    id_delete = request.matchdict['id']
+    query = request.dbsession.query(Category) 
+    sub = query.filter(Subscriber.id == id_delete).first() 
+    print (sub)
+    print ('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
+    request.dbsession.delete(sub)
+    subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
+    return HTTPFound(location='/list')
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
+
 
 
 
 @view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
 def my_view(request):
     return {'one': 'one', 'project': 'subscriptions'}
+
 
 
 db_err_msg = """\
