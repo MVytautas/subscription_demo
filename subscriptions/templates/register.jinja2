@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  </head>
+  <form method="POST" action="register_received">
+    <div>
+      Name <input type="text" name="name"/>
+    </div>
+    <div>
+      Email <input type="text" name="email"/>
+    </div>
+
+
+
+    <div>
+      {% for cat in categories %}
+        <input type="checkbox" name="{{cat.name}}">
+        <label for="{{cat.name}}" >{{cat.name}}</label> 
+      {% endfor %}
+    </div>
+
+
+
+    <input type="submit" value="Submit"/>
+  </form>
+</html>
