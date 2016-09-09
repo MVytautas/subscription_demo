@@ -38,7 +38,7 @@ def register_received_view(request):
 
     if errors!={}:
         # show the errors and retain the inputs
-        return {'errors': errors, 'name': name, 'email':email, 'categories_chosen':categories, 'categories': categories }
+        return {'errors': errors, 'name': name, 'email':email, 'categories_chosen':categories_chosen, 'categories': categories }
     else:
         # if inputs correct, try to save subscription and load a fresh form
 

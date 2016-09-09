@@ -54,15 +54,19 @@
     <div id="categories">
       {% if errors.cats %}
           <span class="error"> Choose at least 1 category!</span> 
-      {% endif %} 
-      {% for cat in categories %}
-
+      {% endif %}  
+      {% for cat in categories %} 
         <div>
           <h3>{{cat.name}}</h3>
           <div class="flat-rounded-checkbox">
+            <!-- Save the cnhoices upon unsuccessful submits -->
+            {% if cat.name in categories_chosen %}
+                <input type="checkbox" checked value="{{cat.name}}" id="{{cat.name}}" name="categories"> 
+            {% else %}                        
               <input type="checkbox" value="{{cat.name}}" id="{{cat.name}}" name="categories">
-              <label for="{{cat.name}}"></label>
-              <div class="button-rounded"></div>
+            {% endif %} 
+            <label for="{{cat.name}}"></label>
+            <div class="button-rounded"></div>
           </div>  
         </div>
 
