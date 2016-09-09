@@ -5,13 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="pyramid web application">
-    <meta name="author" content="Pylons Project">
-    <link rel="shortcut icon" href="{{request.static_url('subscriptions:static/pyramid-16x16.png')}}">
+    <meta name="author" content="Tomas Giedraitis">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <title>View list of subscriptions</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this scaffold -->
     <link href="{{request.static_url('subscriptions:static/theme.css')}}" rel="stylesheet">
@@ -24,10 +23,41 @@
   </head>
 
   <body>
-    {% for sub in subscriptions %} 
-      <div>
-        <h3>{{sub.name}}</h3>
-
-    {% endfor %}
+    <div class="container">
+      <h2>Subscriptions</h2>
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Order by {{orderBy}}
+        <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="name">Name</a></li>
+          <li><a href="email">Email</a></li>
+          <li><a href="date">Date</a></li>
+        </ul>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th href="test">Name</th>
+            <th href="test">Email</th>
+            <th href="test">Categories</th>
+            <th>Remove?</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for sub in subscriptions %} 
+          <tr>
+            <td>{{sub.name}}</td>
+            <td>{{sub.email}}</td>
+            <td>
+            {% for cat in sub.categories %} 
+              {{cat.name}};
+            {% endfor %}
+            </td>
+            <td>X</td>
+          </tr> 
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>  
   </body>
 </html>

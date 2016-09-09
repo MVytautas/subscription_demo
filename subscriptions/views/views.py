@@ -10,7 +10,7 @@ from email_validator import validate_email, EmailNotValidError
 @view_config(route_name='register_view', renderer='../templates/register.jinja2')
 def register_view(request):
     
-    categories = request.dbsession.query(Category).all()
+    categories = request.dbsession.query(Category)
     return {'categories': categories, 'errors':False, 'success':False}
 
 @view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
@@ -57,12 +57,22 @@ def register_received_view(request):
             return Response(db_err_msg, content_type='text/plain', status=500)
         return {'categories': categories, 'errors':False, 'success':True}
 
+@view_config(route_name='list_view_unordered', renderer='../templates/list.jinja2')
+def list_view_unordered(request):
+    subscriptions = request.dbsession.query(Subscriber).all()
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
 
 @view_config(route_name='list_view', renderer='../templates/list.jinja2')
 def list_view(request):
-    
-    subscriptions = request.dbsession.query(Subscriber).all()
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
+    orderBy = request.matchdict['orderBy']
+    if orderBy=='date':
+        subscriptions = request.dbsession.query(Subscriber).order_by("registered desc").all()
+    elif orderBy=='email':
+        subscriptions = request.dbsession.query(Subscriber).order_by("email").all()
+    else:
+        subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
+
 
 
 
