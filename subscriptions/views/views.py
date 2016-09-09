@@ -3,21 +3,25 @@ from pyramid.view import view_config
 
 from sqlalchemy.exc import DBAPIError
 
-from ..models import Subscriber
+from ..models import Subscriber, Category
 
 @view_config(route_name='register', renderer='../templates/register.jinja2')
 def register_view(request):
-    return {'success': 'true'}
+    
+    categories = request.dbsession.query(Category).all()  
+    return {'categories': categories}
 
 @view_config(route_name='register_received_view')
 def register_received_view(request):
     name = request.params['name']
-    email = request.params['email']
-
-    print (name)
-    print (email)
+    email = request.params['email'] 
+    categories = request.params.getall('categories') 
     try:
         new_subscriber = Subscriber(name=name, email=email)
+        for cat in categories:
+            query = request.dbsession.query(Category)
+            category = query.filter(Category.name == cat).first()
+            new_subscriber.categories.append(category)
         request.dbsession.add(new_subscriber)
     except DBAPIError:
         return Response(db_err_msg, content_type='text/plain', status=500)
