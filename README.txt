@@ -1,4 +1,4 @@
-subscriptions README
+isubscriptions README
 ==================
 
 Getting Started

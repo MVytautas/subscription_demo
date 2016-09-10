@@ -1,7 +1,6 @@
 from email_validator import validate_email, EmailNotValidError
 
 from pyramid.response import Response
-from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
 from sqlalchemy.exc import DBAPIError
