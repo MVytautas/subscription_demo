@@ -7,4 +7,6 @@ def includeme(config):
     config.add_route('delete', '/remove/{id}')
     config.add_route('list_view', '/list/{orderBy}')
     config.add_route('list_view_unordered', '/list')
+    config.add_route('login', '/login')
+    config.add_route('logout', '/logout')
 

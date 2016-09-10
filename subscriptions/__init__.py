@@ -8,7 +8,7 @@ from .security import groupfinder
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    config = Configurator(settings=settings)
+    config = Configurator(settings=settings, root_factory='.resources.Root')
     config.include('pyramid_chameleon')
     config.include('pyramid_jinja2')
     config.include('.models')
