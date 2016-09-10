@@ -1,9 +1,10 @@
 from email_validator import validate_email, EmailNotValidError
-from sqlalchemy.exc import DBAPIError
 
 from pyramid.response import Response
+from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
 
+from sqlalchemy.exc import DBAPIError
 from pyramid.security import (
     remember,
     forget,
@@ -25,7 +26,7 @@ from ..security import (
 def register_view(request):
 
     categories = request.dbsession.query(Category)
-    return {'categories': categories, 'errors':False, 'success':True}
+    return {'categories': categories, 'errors':False, 'success':False}
 
 @view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
 def register_received_view(request):
@@ -69,6 +70,32 @@ def register_received_view(request):
         except DBAPIError:
             return Response("Database error. We are instantly notified and  will fix it soon!", content_type='text/plain', status=500)
         return {'categories': categories, 'errors':False, 'success':True}
+
+@view_config(route_name='list_view_unordered', renderer='../templates/list.jinja2')
+def list_view_unordered(request):
+    subscriptions = request.dbsession.query(Subscriber).all()
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
+
+@view_config(route_name='list_view', renderer='../templates/list.jinja2')
+def list_view(request):
+    orderBy = request.matchdict['orderBy']
+    if orderBy=='date':
+        subscriptions = request.dbsession.query(Subscriber).order_by("registered desc").all()
+    elif orderBy=='email':
+        subscriptions = request.dbsession.query(Subscriber).order_by("email").all()
+    else:
+        subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
+
+@view_config(route_name='delete', renderer='../templates/list.jinja2')
+def delete(request):
+    id_delete = request.matchdict['id']
+    query = request.dbsession.query(Subscriber)
+    sub = query.filter(Subscriber.id == id_delete).first()
+    request.dbsession.delete(sub)
+    subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
+    return HTTPFound(location='/list')
+    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
 
 
 
@@ -119,29 +146,4 @@ class UserViews:
         return HTTPFound(location=url,
                          headers=headers)
 
-
-    @view_config(route_name='list_view_unordered', renderer='../templates/list.jinja2', permission='edit')
-    def list_view_unordered(request):
-        subscriptions = request.dbsession.query(Subscriber).all()
-        return {'subscriptions': subscriptions, 'errors':False, 'success':False}
-
-    @view_config(route_name='list_view', renderer='../templates/list.jinja2', permission='edit')
-    def list_view(request):
-        orderBy = request.matchdict['orderBy']
-        if orderBy=='date':
-            subscriptions = request.dbsession.query(Subscriber).order_by("registered desc").all()
-        elif orderBy=='email':
-            subscriptions = request.dbsession.query(Subscriber).order_by("email").all()
-        else:
-            subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-        return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
-
-    @view_config(route_name='delete', renderer='../templates/list.jinja2', permission='edit')
-    def delete(request):
-        id_delete = request.matchdict['id']
-        query = request.dbsession.query(Category)
-        sub = query.filter(Subscriber.id == id_delete).first()
-        request.dbsession.delete(sub)
-        subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-        return HTTPFound(location='/list')
 
