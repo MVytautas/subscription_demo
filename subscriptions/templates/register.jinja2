@@ -1,85 +1,82 @@
 <!DOCTYPE html>
 <html lang="{{request.locale_name}}" xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Subscribe for news categories">
-    <meta name="author" content="Tomas Giedraitis">
-    <link rel="shortcut icon" href="{{request.static_url('subscriptions:static/pyramid-16x16.png')}}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Subscribe for news categories">
+  <meta name="author" content="Tomas Giedraitis">
+  <link rel="shortcut icon" href="{{request.static_url('subscriptions:static/pyramid-16x16.png')}}">
 
-    <title>Subscribe to categories</title>
+  <title>Subscribe to categories</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap core CSS -->
+  <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Custom styles for this scaffold -->
-    <link href="{{request.static_url('subscriptions:static/main.css')}}" rel="stylesheet">
+  <!-- Custom styles for this scaffold -->
+  <link href="{{request.static_url('subscriptions:static/main.css')}}" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-    <![endif]-->
-  </head>  
-  <body>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
   <form id="register" method="POST" action="register_received">
-    <div id="details">
-      <h3>Enter your details to subscribe</h3> 
-      {% if success %}
-        <h5 id="success">Subscribed!</h5>
-      {% else %}
-        <h5>Choose at least one category</h5>
-      {% endif %}
-      <div>
-        {% if errors.name %}
-            <span class="error"> {{errors.name}}!</span> 
-        {% endif %} 
-        {% if name %}
-            <span>Name </span> <input type="text" value={{name}} name="name"/>
-        {% else %}
-            <span>Name </span> <input type="text" name="name"/>
-        {% endif %}
-        
+      <div id="details">
+          <h3>Enter your details to subscribe</h3>
+          {% if success %}
+              <h5 id="success">Subscribed!</h5>
+          {% else %}
+              <h5>Choose at least one category</h5>
+          {% endif %}
+          <div>
+              {% if errors.name %}
+                  <span class="error"> {{ errors.name }}!</span>
+              {% endif %}
+              {% if name %}
+                  <span>Name </span>
+                  <input type="text" value={{ name }} name="name"/>
+              {% else %}
+                  <span>Name </span> <input type="text" name="name"/>
+              {% endif %}
+          </div>
+          <div>
+              {% if errors.email %}
+                  <span class="error"> {{ errors.email }}!</span>
+              {% endif %}
+              {% if email %}
+                  <span>Email </span>
+                  <input type="text" value={{ email }} name="email"/>
+              {% else %}
+                  <span>Email </span> <input type="text" name="email"/>
+              {% endif %}
+          </div>
       </div>
-      <div>
-        {% if errors.email %}
-            <span class="error"> {{errors.email}}!</span> 
-        {% endif %} 
-        {% if email %}
-            <span>Email </span> <input type="text" value={{email}} name="email"/>
-        {% else %}
-            <span>Email </span> <input type="text" name="email"/>
-        {% endif %} 
+      <div id="categories">
+          {% if errors.cats %}
+              <span class="error"> Choose at least 1 category!</span>
+          {% endif %}
+          {% for cat in categories %}
+              <div>
+                  <h3>{{ cat.name }}</h3>
+                  <div class="flat-rounded-checkbox">
+                      <!-- Save the choices upon unsuccessful submits -->
+                      {% if cat.name in categories_chosen %}
+                          <input type="checkbox" checked value="{{ cat.name }}"
+                                 id="{{ cat.name }}" name="categories">
+                      {% else %}
+                          <input type="checkbox" value="{{ cat.name }}"
+                                 id="{{ cat.name }}" name="categories">
+                      {% endif %}
+                      <label for="{{ cat.name }}"></label>
+                      <div class="button-rounded"></div>
+                  </div>
+              </div>
+          {% endfor %}
       </div>
-    </div>
-
-
-
-    <div id="categories">
-      {% if errors.cats %}
-          <span class="error"> Choose at least 1 category!</span> 
-      {% endif %}  
-      {% for cat in categories %} 
-        <div>
-          <h3>{{cat.name}}</h3>
-          <div class="flat-rounded-checkbox">
-            <!-- Save the cnhoices upon unsuccessful submits -->
-            {% if cat.name in categories_chosen %}
-                <input type="checkbox" checked value="{{cat.name}}" id="{{cat.name}}" name="categories"> 
-            {% else %}                        
-              <input type="checkbox" value="{{cat.name}}" id="{{cat.name}}" name="categories">
-            {% endif %} 
-            <label for="{{cat.name}}"></label>
-            <div class="button-rounded"></div>
-          </div>  
-        </div>
-
-      {% endfor %}
-    </div>
-
-
-
-    <input id="submit" class="button" type="submit" value="Subscribe"/>
+      <input id="submit" class="button" type="submit" value="Subscribe"/>
   </form>
-  </body>
+</body>
+</html>

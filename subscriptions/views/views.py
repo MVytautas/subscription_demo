@@ -7,13 +7,13 @@ from sqlalchemy.exc import DBAPIError
 from pyramid.security import (
     remember,
     forget,
-    )
+)
 
 from pyramid.view import (
     view_config,
     view_defaults,
     forbidden_view_config,
-    )
+)
 
 from ..models import Subscriber, Category
 from ..security import (
@@ -21,15 +21,17 @@ from ..security import (
     check_password,
 )
 
-@view_config(route_name='register_view', renderer='../templates/register.jinja2')
+
+@view_config(route_name='register_view',
+             renderer='../templates/register.jinja2')
 def register_view(request):
-
     categories = request.dbsession.query(Category)
-    return {'categories': categories, 'errors':False, 'success':False}
+    return {'categories': categories, 'errors': False, 'success': False}
 
-@view_config(route_name='register_received_view', renderer='../templates/register.jinja2')
+
+@view_config(route_name='register_received_view',
+             renderer='../templates/register.jinja2')
 def register_received_view(request):
-
     categories = request.dbsession.query(Category).all()
 
     try:
@@ -37,25 +39,27 @@ def register_received_view(request):
         email = request.params['email']
         categories_chosen = request.params.getall('categories')
     except KeyError:
-        return {'categories': categories, 'errors':False, 'success':False}
+        return {'categories': categories, 'errors': False, 'success': False}
 
     # validate inputs
     errors = {}
-    if len(name)<1:
-        errors['name']="You must provide a name longer than 1 character"
-    if len(categories_chosen)<1:
-        errors['cats']="You must choose at least 1 category"
+    if len(name) < 1:
+        errors['name'] = "You must provide a name longer than 1 character"
+    if len(categories_chosen) < 1:
+        errors['cats'] = "You must choose at least 1 category"
 
     try:
-        v = validate_email(email) # validate and get info
-        email = v["email"] # replace with normalized form
+        v = validate_email(email)  # validate and get info
+        email = v["email"]  # replace with normalized form
     except EmailNotValidError as e:
         # email is not valid, exception message is human-readable
-        errors['email']="Enter a valid email"
+        errors['email'] = "Enter a valid email"
 
-    if errors!={}:
+    if errors != {}:
         # show the errors and retain the inputs
-        return {'errors': errors, 'name': name, 'email':email, 'categories_chosen':categories_chosen, 'categories': categories }
+        return {'errors': errors, 'name': name, 'email': email,
+                'categories_chosen': categories_chosen,
+                'categories': categories}
     else:
         # if inputs correct, try to save subscription and load a fresh form
 
@@ -67,24 +71,34 @@ def register_received_view(request):
                 new_subscriber.categories.append(category)
             request.dbsession.add(new_subscriber)
         except DBAPIError:
-            return Response("Database error. We are instantly notified and  will fix it soon!", content_type='text/plain', status=500)
-        return {'categories': categories, 'errors':False, 'success':True}
+            return Response(
+                "Database error. We are instantly notified and  will fix it soon!",
+                content_type='text/plain', status=500)
+        return {'categories': categories, 'errors': False, 'success': True}
 
-@view_config(route_name='list_view_unordered', renderer='../templates/list.jinja2')
+
+@view_config(route_name='list_view_unordered',
+             renderer='../templates/list.jinja2')
 def list_view_unordered(request):
     subscriptions = request.dbsession.query(Subscriber).all()
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
+    return {'subscriptions': subscriptions, 'errors': False, 'success': False}
+
 
 @view_config(route_name='list_view', renderer='../templates/list.jinja2')
 def list_view(request):
     orderBy = request.matchdict['orderBy']
-    if orderBy=='date':
-        subscriptions = request.dbsession.query(Subscriber).order_by("registered desc").all()
-    elif orderBy=='email':
-        subscriptions = request.dbsession.query(Subscriber).order_by("email").all()
+    if orderBy == 'date':
+        subscriptions = request.dbsession.query(Subscriber).order_by(
+            "registered desc").all()
+    elif orderBy == 'email':
+        subscriptions = request.dbsession.query(Subscriber).order_by(
+            "email").all()
     else:
-        subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False, 'orderBy':orderBy}
+        subscriptions = request.dbsession.query(Subscriber).order_by(
+            "name").all()
+    return {'subscriptions': subscriptions, 'errors': False, 'success': False,
+            'orderBy': orderBy}
+
 
 @view_config(route_name='delete', renderer='../templates/list.jinja2')
 def delete(request):
@@ -94,8 +108,7 @@ def delete(request):
     request.dbsession.delete(sub)
     subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
     return HTTPFound(location='/list')
-    return {'subscriptions': subscriptions, 'errors':False, 'success':False}
-
+    return {'subscriptions': subscriptions, 'errors': False, 'success': False}
 
 
 @view_defaults(renderer='../templates/home.pt')
@@ -121,7 +134,6 @@ class UserViews:
             login = request.params['login']
             password = request.params['password']
 
-
             if check_password(password, USERS.get(login)):
                 headers = remember(request, login)
                 return HTTPFound(location=came_from,
@@ -144,5 +156,3 @@ class UserViews:
         url = request.route_url('home')
         return HTTPFound(location=url,
                          headers=headers)
-
-

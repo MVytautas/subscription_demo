@@ -5,7 +5,7 @@ import transaction
 from pyramid.paster import (
     get_appsettings,
     setup_logging,
-    )
+)
 
 from pyramid.scripts.common import parse_vars
 
@@ -14,7 +14,7 @@ from ..models import (
     get_engine,
     get_session_factory,
     get_tm_session,
-    )
+)
 from ..models import Admin, Subscriber, Category
 
 
@@ -41,7 +41,14 @@ def main(argv=sys.argv):
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
 
-        categories = ['Politics', 'Celebrities', 'Sports', 'Economy', 'Entertainment']
+        categories = [
+            'Politics',
+            'Celebrities',
+            'Sports',
+            'Economy',
+            'Entertainment',
+        ]
+
         for category in categories:
             entry = Category(name=category)
             dbsession.add(entry)

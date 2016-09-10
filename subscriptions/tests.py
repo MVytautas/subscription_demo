@@ -20,7 +20,7 @@ class BaseTest(unittest.TestCase):
             get_engine,
             get_session_factory,
             get_tm_session,
-            )
+        )
 
         self.engine = get_engine(settings)
         session_factory = get_session_factory(self.engine)
@@ -40,7 +40,6 @@ class BaseTest(unittest.TestCase):
 
 
 class TestMyViewSuccessCondition(BaseTest):
-
     def setUp(self):
         super(TestMyViewSuccessCondition, self).setUp()
         self.init_database()
@@ -58,7 +57,6 @@ class TestMyViewSuccessCondition(BaseTest):
 
 
 class TestMyViewFailureCondition(BaseTest):
-
     def test_failing_view(self):
         from .views.default import my_view
         info = my_view(dummy_request(self.session))

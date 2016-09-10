@@ -20,13 +20,13 @@ requires = [
     'waitress',
     'pyramid_chameleon',
     'bcrypt'
-    ]
+]
 
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest',  # includes virtualenv
     'pytest-cov',
-    ]
+]
 
 setup(name='subscriptions',
       version='0.0',

@@ -25,6 +25,7 @@ class Admin(Base):
     login = Column(Text)
     password = Column(Text)
 
+
 class Subscriber(Base):
     __tablename__ = 'subscribers'
     id = Column(Integer, primary_key=True)
@@ -32,10 +33,10 @@ class Subscriber(Base):
     email = Column(String)
     registered = Column(DateTime(timezone=True), server_default=func.now())
     categories = relationship("Category",
-                    secondary=association_table)
+                              secondary=association_table)
+
 
 class Category(Base):
     __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
     name = Column(Text)
-
