@@ -111,14 +111,14 @@ def delete(request):
     return {'subscriptions': subscriptions, 'errors': False, 'success': False}
 
 
-@view_defaults(renderer='../templates/home.pt')
+@view_defaults(renderer='../templates/login.jinja2')
 class UserViews:
     def __init__(self, request):
         self.request = request
         self.logged_in = request.authenticated_userid
 
-    @view_config(route_name='login', renderer='../templates/login.pt')
-    @forbidden_view_config(renderer='../templates/login.pt')
+    @view_config(route_name='login', renderer='../templates/login.jinja2')
+    @forbidden_view_config(renderer='../templates/login.jinja2')
     def login(self):
         request = self.request
 
