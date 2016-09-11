@@ -80,13 +80,18 @@ def register_received_view(request):
 @view_config(route_name='list_view_unordered',
              renderer='../templates/list.jinja2')
 def list_view_unordered(request):
+    list_url = request.route_url('list_view_unordered')
     subscriptions = request.dbsession.query(Subscriber).all()
-    return {'subscriptions': subscriptions, 'errors': False, 'success': False}
+
+    return {'subscriptions': subscriptions, 'errors': False, 'success': False,
+            'list_url': list_url}
 
 
 @view_config(route_name='list_view', renderer='../templates/list.jinja2')
 def list_view(request):
+    list_url = request.route_url('list_view_unordered')
     orderBy = request.matchdict['orderBy']
+
     if orderBy == 'date':
         subscriptions = request.dbsession.query(Subscriber).order_by(
             "registered desc").all()
@@ -97,7 +102,7 @@ def list_view(request):
         subscriptions = request.dbsession.query(Subscriber).order_by(
             "name").all()
     return {'subscriptions': subscriptions, 'errors': False, 'success': False,
-            'orderBy': orderBy}
+            'orderBy': orderBy, 'list_url': list_url}
 
 
 @view_config(route_name='delete', renderer='../templates/list.jinja2')

@@ -24,7 +24,6 @@
     <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body>
 
 <div class="box-list">
@@ -35,9 +34,9 @@
                     data-toggle="dropdown">Order by {{ orderBy }}
                 <span class="caret"></span></button>
             <ul class="dropdown-menu">
-                <li><a href="name">Name</a></li>
-                <li><a href="email">Email</a></li>
-                <li><a href="date">Date</a></li>
+                <li><a href="{{ list_url }}/name">Name</a></li>
+                <li><a href="{{ list_url }}/email">Email</a></li>
+                <li><a href="{{ list_url }}/date">Date</a></li>
             </ul>
         </div>
         <table class="table table-striped">
