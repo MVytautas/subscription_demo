@@ -46,7 +46,7 @@ def register_received_view(request):
     # validate inputs
     errors = {}
     if len(name) < 1:
-        errors['name'] = "You must provide a name longer than 1 character"
+        errors['name'] = "Enter a valid name"
     if len(categories_chosen) < 1:
         errors['cats'] = "You must choose at least 1 category"
 
@@ -64,7 +64,6 @@ def register_received_view(request):
                 'categories': categories}
     else:
         # if inputs correct, try to save subscription and load a fresh form
-
         try:
             new_subscriber = Subscriber(name=name, email=email)
             for cat in categories_chosen:
@@ -90,7 +89,8 @@ def edit_form(request):
     # validate name
     errors = {}
     if len(name) < 1:
-        errors['name'] = "You must provide a name longer than 1 character"
+        print("SHJOT")
+        errors['name'] = "Enter a valid name"
 
     try:
         v = validate_email(email)  # validate and get info
@@ -101,7 +101,9 @@ def edit_form(request):
 
     if errors != {}:
         # show the errors and retain the inputs
-        return {'errors': errors, 'name': name, 'email': email}
+        print("errs", errors)
+
+        return {'errors': errors, 'name': name, 'email': email, 'success': False}
 
     else:
         # if inputs correct, try to save subscription and load a fresh form
@@ -110,7 +112,7 @@ def edit_form(request):
             sub_id = request.params.get('changes[url]')
 
             # for testing purposes
-            sub_id = 7
+            sub_id = 1
 
             query = request.dbsession.query(Subscriber)
             subscriber = query.filter(Subscriber.id == sub_id).first()

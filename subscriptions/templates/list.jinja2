@@ -116,6 +116,9 @@
 
     // TODO apply to all objs
     $('#edit').click(function (e) {
+
+        $(".error").hide();
+
         // even clicks
         clicks++;
 
@@ -137,10 +140,9 @@
             var email = $("input[name='email']").val();
 
 
-            var url="{{ list_url }}/edit/7"
+            var url = "{{ list_url }}/edit/1";
 
 
-{#            var url = $(this).attr('href');#}
             var changes = {};
 
             changes['name'] = name;
@@ -153,22 +155,44 @@
                 data: {
                     changes: changes,
                 },
+                dataType: 'json',
                 beforeSend: function () {
                     $("#loader").show();
                 },
                 success: function (data) {
-                    $("#loader").hide();
-                    $('#edit').find("img").attr("src", "{{ request.static_url('subscriptions:static/edit.png') }}");
+                    if (data.success) {
+                        $("#loader").hide();
+                        $('#edit').find("img").attr("src", "{{ request.static_url('subscriptions:static/edit.png') }}");
 
-                    name_field.hide();
-                    name_field.next().html(name).show();
+                        name_field.hide();
+                        name_field.next().html(name).show();
 
-                    email_field.hide();
-                    email_field.next().html(email).show();
+                        email_field.hide();
+                        email_field.next().html(email).show();
+                    } else {
+                        var keys = Object.keys(data.errors);
+                        if (keys.length > 0) {
+                            clicks = 1;
+
+                            var nameError = data.errors['name'];
+                            if (nameError == undefined) {
+                                nameError = "";
+                            }
+
+                            var emailError = data.errors['email'];
+
+                            if (emailError == undefined) {
+                                emailError = "";
+                            }
+
+                            setTimeout(function () {
+                                $("tbody  tr:first-child").after("<tr class='error' style='color: red;" +
+                                        " text-align: center'> <td>" + nameError + "</td><td>" + emailError + "</td> </tr>");
+                            }, 100);
+
+                        }
+                    }
                 },
-                error: function (data) {
-
-                }
 
             });
         }
