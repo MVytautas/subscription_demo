@@ -1,5 +1,7 @@
 import os
 import sys
+
+import random
 import transaction
 
 from pyramid.paster import (
@@ -52,3 +54,29 @@ def main(argv=sys.argv):
         for category in categories:
             entry = Category(name=category)
             dbsession.add(entry)
+
+        # for development
+
+        for i in range(5):
+
+            name = 'Test Name {}'.format(i)
+            email = 'testemail{}@test.com'.format(i)
+
+            new_user = Subscriber(name=name, email=email)
+
+            # number of categories
+            cat_num = random.randint(1, 5)
+
+            # categories indexes
+            cat_ind = random.sample(range(0, 5), cat_num)
+
+            chosen_categories = []
+            for index in cat_ind:
+                chosen_categories.append(categories[index])
+
+            for cat in chosen_categories:
+                query = dbsession.query(Category)
+                category = query.filter(Category.name == cat).first()
+                new_user.categories.append(category)
+
+                dbsession.add(new_user)
