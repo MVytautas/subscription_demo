@@ -109,10 +109,12 @@
 
     var clicks = 0;
 
+    // TODO apply to all objs
     var name_field = $('#edit').parent().children(':first-child');
     var email_field = $('#edit').parent().children(':nth-child(3)');
 
 
+    // TODO apply to all objs
     $('#edit').click(function (e) {
         // even clicks
         clicks++;
@@ -129,10 +131,16 @@
         } else {
             clicks = 0;
             // even clicks
+
+            // TODO which?
             var name = $("input[name='name']").val();
             var email = $("input[name='email']").val();
 
-            var url = $(this).attr('href');
+
+            var url="{{ list_url }}/edit/7"
+
+
+{#            var url = $(this).attr('href');#}
             var changes = {};
 
             changes['name'] = name;

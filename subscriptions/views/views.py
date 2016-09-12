@@ -106,9 +106,11 @@ def edit_form(request):
     else:
         # if inputs correct, try to save subscription and load a fresh form
         try:
+            # TODO add ID retrieval for any subscriber
             sub_id = request.params.get('changes[url]')
 
-            sub_id = 2
+            # for testing purposes
+            sub_id = 7
 
             query = request.dbsession.query(Subscriber)
             subscriber = query.filter(Subscriber.id == sub_id).first()
@@ -116,6 +118,7 @@ def edit_form(request):
             subscriber.name = name
             subscriber.email = email
 
+            request.dbsession.flush()
             transaction.commit()
 
         except DBAPIError:
