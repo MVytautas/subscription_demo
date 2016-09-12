@@ -1,3 +1,5 @@
+import transaction
+
 from email_validator import validate_email, EmailNotValidError
 
 from pyramid.response import Response
@@ -75,6 +77,52 @@ def register_received_view(request):
                 "Database error. We are instantly notified and  will fix it soon!",
                 content_type='text/plain', status=500)
         return {'categories': categories, 'errors': False, 'success': True}
+
+
+@view_config(route_name='edit_form', xhr=True, renderer='json')
+def edit_form(request):
+    try:
+        name = request.params.get('changes[name]')
+        email = request.params.get('changes[email]')
+    except KeyError:
+        return {'errors': False, 'success': False}
+
+    # validate name
+    errors = {}
+    if len(name) < 1:
+        errors['name'] = "You must provide a name longer than 1 character"
+
+    try:
+        v = validate_email(email)  # validate and get info
+        email = v["email"]  # replace with normalized form
+    except EmailNotValidError as e:
+        # email is not valid, exception message is human-readable
+        errors['email'] = "Enter a valid email"
+
+    if errors != {}:
+        # show the errors and retain the inputs
+        return {'errors': errors, 'name': name, 'email': email}
+
+    else:
+        # if inputs correct, try to save subscription and load a fresh form
+        try:
+            sub_id = request.params.get('changes[url]')
+
+            sub_id = 2
+
+            query = request.dbsession.query(Subscriber)
+            subscriber = query.filter(Subscriber.id == sub_id).first()
+
+            subscriber.name = name
+            subscriber.email = email
+
+            transaction.commit()
+
+        except DBAPIError:
+            return Response(
+                "Database error. We are instantly notified and  will fix it soon!",
+                content_type='text/plain', status=500)
+        return {'errors': False, 'success': True}
 
 
 @view_config(route_name='list_view_unordered',

@@ -44,13 +44,19 @@
             <th href="test">Email</th>
             <th href="test">Categories</th>
             <th href="test">Date</th>
-            <th>Remove?</th>
+            <th>Edit</th>
+            <th>Remove</th>
         </tr>
         </thead>
         <tbody>
         {% for sub in subscriptions %}
             <tr>
+                <td style='display: none;'><input name='name'
+                                                  value="{{ sub.name }}"></td>
                 <td>{{ sub.name }}</td>
+
+                <td style='display: none;'><input name='email'
+                                                  value="{{ sub.email }}"></td>
                 <td>{{ sub.email }}</td>
                 <td>
                     {% for cat in sub.categories %}
@@ -58,6 +64,10 @@
                     {% endfor %}
                 </td>
                 <td>{{ sub.registered }}</td>
+                <td id="edit">
+                    <img src="{{ request.static_url('subscriptions:static/edit.png') }}">
+                    </a>
+                </td>
                 <td id="delete"><a
                         href="{{ list_url }}/remove/{{ sub.id }}">X</a></td>
             </tr>
@@ -74,22 +84,90 @@
                 $(this).css('margin-left', '0px');
             });
         }
-
-        $(window).on('resize', function () {
-            if ($(window).width() <= 800) {
-                $("td:last-child > a").each(function () {
-                    $(this).text('Remove');
-                    $(this).css('margin-left', '0');
-                });
-            }
-            else {
-                $("td:last-child > a").each(function () {
-                    $(this).text('X');
-                    $(this).css('margin-left', '30px');
-                });
-            }
-        });
     });
+
+
+    $(window).on('resize', function () {
+        if ($(window).width() <= 800) {
+            $("td:last-child > a").each(function () {
+                $(this).text('Remove');
+                $(this).css('margin-left', '0');
+            });
+        }
+        else {
+            $("td:last-child > a").each(function () {
+                $(this).text('X');
+                $(this).css('margin-left', '30px');
+            });
+        }
+    });
+
+
+    $('#edit').hover(function () {
+        $(this).css('cursor', 'pointer');
+    });
+
+    var clicks = 0;
+
+    var name_field = $('#edit').parent().children(':first-child');
+    var email_field = $('#edit').parent().children(':nth-child(3)');
+
+
+    $('#edit').click(function (e) {
+        // even clicks
+        clicks++;
+
+        if (clicks === 1) {
+            $(this).find("img").attr("src", "{{ request.static_url('subscriptions:static/tick.png') }}");
+
+            name_field.show();
+            name_field.next().hide();
+
+            email_field.show();
+            email_field.next().hide();
+
+        } else {
+            clicks = 0;
+            // even clicks
+            var name = $("input[name='name']").val();
+            var email = $("input[name='email']").val();
+
+            var url = $(this).attr('href');
+            var changes = {};
+
+            changes['name'] = name;
+            changes['email'] = email;
+            changes['url'] = url;
+
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: {
+                    changes: changes,
+                },
+                beforeSend: function () {
+                    $("#loader").show();
+                },
+                success: function (data) {
+                    $("#loader").hide();
+                    $('#edit').find("img").attr("src", "{{ request.static_url('subscriptions:static/edit.png') }}");
+
+                    name_field.hide();
+                    name_field.next().html(name).show();
+
+                    email_field.hide();
+                    email_field.next().html(email).show();
+                },
+                error: function (data) {
+
+                }
+
+            });
+        }
+        $(this).data("clicks", !clicks);
+    });
+
+
 </script>
 
 </body>

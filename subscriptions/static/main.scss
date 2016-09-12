@@ -257,6 +257,15 @@ p {
     padding: 8px 80px 8px 10px;
   }
 
+  input {
+    padding: 8px 8px 8px 10px;
+    //padding: 7px 7px 10px 5px;
+  }
+
+  #delete > a:hover {
+    color: #d70000;
+  }
+
 }
 
 .box-register {
@@ -360,7 +369,7 @@ p {
   border-radius: 2px;
   display: inline-block;
   height: 50px;
-  max-width: 170px;
+  max-width: 180px;
   line-height: 36px;
   outline: 0;
   padding: 0 2rem;

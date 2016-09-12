@@ -60,7 +60,7 @@ def main(argv=sys.argv):
         for i in range(5):
 
             name = 'Test Name {}'.format(i)
-            email = 'testemail{}@test.com'.format(i)
+            email = 'test.email{}@test.com'.format(i)
 
             new_user = Subscriber(name=name, email=email)
 

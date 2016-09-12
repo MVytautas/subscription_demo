@@ -6,6 +6,7 @@ def includeme(config):
     config.add_route('register_view', '/register')
     config.add_route('register_received_view', '/register_received')
     config.add_route('delete', '/list/remove/{id}')
+    config.add_route('edit_form', '/list/edit/{id}')
     config.add_route('list_view', '/list/{orderBy}')
     config.add_route('list_view_unordered', '/list')
     config.add_route('home', '/')
