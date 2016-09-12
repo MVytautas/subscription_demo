@@ -64,7 +64,7 @@
         </div>
         <div id="categories">
             {% if errors.cats %}
-                <span class="error"> Choose at least 1 category!</span>
+                <span class="error">Choose at least 1 category!</span>
             {% endif %}
             {% for cat in categories %}
                 <div>
@@ -85,12 +85,12 @@
                 </div>
             {% endfor %}
         </div>
-        <input id="submit" class="button" type="submit" value="Subscribe"/>
+        <button class="button" type="submit">Subscribe</button>
     </form>
-    <div class="box-success">
-        Thank you for subscribing!
-        <div id="envelope">lia</div>
-    </div>
+{#    <div class="box-success">#}
+{#        Thank you for subscribing!#}
+{#        <div id="envelope"></div>#}
+{#    </div>#}
 
 
 </div>

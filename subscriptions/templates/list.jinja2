@@ -27,44 +27,71 @@
 <body>
 
 <div class="box-list">
-    <div class="container">
-        <h2>Subscriptions</h2>
-        <div class="dropdown">
-            <button class="button dropdown-toggle" type="button"
-                    data-toggle="dropdown">Order by {{ orderBy }}
-                <span class="caret"></span></button>
-            <ul class="dropdown-menu">
-                <li><a href="{{ list_url }}/name">Name</a></li>
-                <li><a href="{{ list_url }}/email">Email</a></li>
-                <li><a href="{{ list_url }}/date">Date</a></li>
-            </ul>
-        </div>
-        <table class="table table-striped">
-            <thead>
-            <tr>
-                <th href="test">Name</th>
-                <th href="test">Email</th>
-                <th href="test">Categories</th>
-                <th>Remove?</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for sub in subscriptions %}
-                <tr>
-                    <td>{{ sub.name }}</td>
-                    <td>{{ sub.email }}</td>
-                    <td>
-                        {% for cat in sub.categories %}
-                            {{ cat.name }};
-                        {% endfor %}
-                    </td>
-                    <td id="delete"><a href="remove/{{ sub.id }}">X</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+    <h2>Subscriptions</h2>
+    <div class="dropdown">
+        <button class="button dropdown-toggle" type="button"
+                data-toggle="dropdown">Order by {{ orderBy }}
+            <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="{{ list_url }}/name">Name</a></li>
+            <li><a href="{{ list_url }}/email">Email</a></li>
+            <li><a href="{{ list_url }}/date">Date</a></li>
+        </ul>
     </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th href="test">Name</th>
+            <th href="test">Email</th>
+            <th href="test">Categories</th>
+            <th href="test">Date</th>
+            <th>Remove?</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for sub in subscriptions %}
+            <tr>
+                <td>{{ sub.name }}</td>
+                <td>{{ sub.email }}</td>
+                <td>
+                    {% for cat in sub.categories %}
+                        {{ cat.name }};
+                    {% endfor %}
+                </td>
+                <td>{{ sub.registered }}</td>
+                <td id="delete"><a
+                        href="{{ list_url }}/remove/{{ sub.id }}">X</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 </div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if ($(window).width() <= 800) {
+            $("td:last-child > a").each(function () {
+                $(this).text('Remove');
+                $(this).css('margin-left', '0px');
+            });
+        }
+
+        $(window).on('resize', function () {
+            if ($(window).width() <= 800) {
+                $("td:last-child > a").each(function () {
+                    $(this).text('Remove');
+                    $(this).css('margin-left', '0');
+                });
+            }
+            else {
+                $("td:last-child > a").each(function () {
+                    $(this).text('X');
+                    $(this).css('margin-left', '30px');
+                });
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

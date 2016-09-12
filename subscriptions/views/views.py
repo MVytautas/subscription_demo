@@ -112,8 +112,7 @@ def delete(request):
     sub = query.filter(Subscriber.id == id_delete).first()
     request.dbsession.delete(sub)
     subscriptions = request.dbsession.query(Subscriber).order_by("name").all()
-    return HTTPFound(location='/list')
-    return {'subscriptions': subscriptions, 'errors': False, 'success': False}
+    return HTTPFound(location=request.referrer)
 
 
 @view_defaults(renderer='../templates/login.jinja2')
