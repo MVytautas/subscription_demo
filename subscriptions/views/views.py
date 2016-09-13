@@ -89,7 +89,6 @@ def edit_form(request):
     # validate name
     errors = {}
     if len(name) < 1:
-        print("SHJOT")
         errors['name'] = "Enter a valid name"
 
     try:
@@ -101,18 +100,12 @@ def edit_form(request):
 
     if errors != {}:
         # show the errors and retain the inputs
-        print("errs", errors)
-
         return {'errors': errors, 'name': name, 'email': email, 'success': False}
 
     else:
         # if inputs correct, try to save subscription and load a fresh form
         try:
-            # TODO add ID retrieval for any subscriber
-            sub_id = request.params.get('changes[url]')
-
-            # for testing purposes
-            sub_id = 1
+            sub_id = request.params.get('changes[url]')[-1]
 
             query = request.dbsession.query(Subscriber)
             subscriber = query.filter(Subscriber.id == sub_id).first()

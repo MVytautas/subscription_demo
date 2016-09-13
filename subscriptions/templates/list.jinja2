@@ -86,7 +86,6 @@
         }
     });
 
-
     $(window).on('resize', function () {
         if ($(window).width() <= 800) {
             $("td:last-child > a").each(function () {
@@ -107,9 +106,6 @@
         $(this).css('cursor', 'pointer');
     });
 
-    var clicks = 0;
-
-    // TODO apply to all objs
     var name_field;
     var email_field;
 
@@ -117,19 +113,13 @@
 
     $('.edit').click(function (e) {
         current_class = $(this);
+        name_field = current_class.parent().children(':first-child');
+        email_field = current_class.parent().children(':nth-child(3)');
 
-        // TODO target_current
-        $(".error").hide();
+        if (!current_class.hasClass('clicked')) {
+            current_class.addClass('clicked');
 
-        // even clicks
-        clicks++;
-
-        if (clicks === 1) {
             $(this).find("img").attr("src", "{{ request.static_url('subscriptions:static/tick.png') }}");
-
-            name_field = $(this).parent().children(':first-child');
-            email_field = $(this).parent().children(':nth-child(3)');
-
 
             name_field.show();
             name_field.next().hide();
@@ -138,18 +128,11 @@
             email_field.next().hide();
 
         } else {
-            clicks = 0;
-            // even clicks
-
             var name = name_field.find("input").val();
             var email = email_field.find("input").val();
 
+            var id = current_class.siblings('#delete').find('a').attr('href').slice(-1);
 
-            var id = $(this).siblings('#delete').find('a').attr('href').slice(-1);
-
-            console.log("id=", id);
-
-            // TODO apply to all objs
             var url = "{{ list_url }}/edit/" + id;
 
             var changes = {};
@@ -170,6 +153,7 @@
                 },
                 success: function (data) {
                     if (data.success) {
+                        current_class.parent().next(".error").remove();
                         $("#loader").hide();
                         $('.edit').find("img").attr("src", "{{ request.static_url('subscriptions:static/edit.png') }}");
 
@@ -178,10 +162,12 @@
 
                         email_field.hide();
                         email_field.next().html(email).show();
+
+                        current_class.removeClass('clicked');
                     } else {
+                        current_class.parent().next(".error").remove();
                         var keys = Object.keys(data.errors);
                         if (keys.length > 0) {
-                            clicks = 1;
 
                             var nameError = data.errors['name'];
                             if (nameError == undefined) {
@@ -195,8 +181,6 @@
                             }
 
                             setTimeout(function () {
-                                console.log("this", current_class);
-
                                 current_class.parent().after("<tr class='error' style='color: red;" +
                                         " text-align: center'> <td>" + nameError + "</td><td>" + emailError + "</td> </tr>");
                             }, 100);
@@ -208,6 +192,12 @@
             });
         }
         $(this).data("clicks", !clicks);
+    });
+
+    $('input').click(function () {
+        current_class = $(this).parent().siblings('.edit');
+        name_field = current_class.parent().children(':first-child');
+        email_field = current_class.parent().children(':nth-child(3)');
     });
 
 
