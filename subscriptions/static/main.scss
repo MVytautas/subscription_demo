@@ -178,7 +178,7 @@ p {
     margin-bottom: 30px;
   }
 
-  .box-list table > tbody > tr > td > #delete a {
+  .box-list table > tbody > tr > td > .delete a {
     margin-left: 0;
   }
 
@@ -237,6 +237,39 @@ p {
   }
 }
 
+.fake-input{
+  border:none;
+  background:none;
+  pointer-events:none;
+}
+
+.edit-div{
+    cursor:pointer;
+    padding: 0.4em;
+    border-radius: 100%;
+    transition: 0.5s all ease;
+}
+.edit-div:hover{
+  background: #e2e2e2;
+  transition: 0.5s all ease;
+}
+.delete-div{
+  a{
+      cursor:pointer;
+      display: inline-block;
+      text-align:center;
+      padding: 0.4em;
+      height: 2em;
+      width: 2em; 
+      border-radius: 100%;
+      transition: 0.5s all ease;
+  }
+  a:hover{
+    background: #e2e2e2;
+    transition: 0.5s all ease;
+  }
+}
+
 .box-list {
   display: table;
   position: relative;
@@ -262,12 +295,17 @@ p {
     //padding: 7px 7px 10px 5px;
   }
 
-  #delete > a:hover {
+  .delete > a:hover {
     color: #d70000;
   }
 
 }
-
+#logout{
+  position: absolute;
+    top: 1em;
+    right: 2em;
+    z-index: 2;
+}
 .box-register {
   display: table;
   position: relative;
@@ -387,17 +425,14 @@ p {
   color: red;
 }
 
-#delete a {
+.delete a {
   text-decoration: none;
   color: red;
   font-weight: 700;
-  margin-left: 2em;
+  margin-left: 1em;
 }
 
-#success {
-  position: relative;
-  top: 1em;
-  left: 3em;
+#success {  
   color: green;
   font-size: 1.4em;
 }
@@ -405,10 +440,7 @@ p {
 #register {
 
   #details {
-    margin: auto;
-    h3 {
-      margin-bottom: 1.5em;
-    }
+    margin: auto; 
     div {
       margin: 2em;
     }
@@ -426,14 +458,7 @@ p {
     margin-top: -2em;
     margin-bottom: 20px;
     width: 15em;
-  }
-
-  h5 {
-    display: block;
-    margin: auto;
-    margin-top: -2em;
-    width: 15em;
-  }
+  } 
   #submit {
     display: block;
     margin: auto;

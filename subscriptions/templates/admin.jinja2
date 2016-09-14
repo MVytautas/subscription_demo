@@ -26,24 +26,27 @@
 </head>
 <body>
 <div class="box-list">
-    <h2>Subscriptions</h2>
+    <h2>Subscriptions</h2>  
+    <p>
+    <a id="logout" href="{{request.route_url('logout')}}">Logout</a>
+    </p>   
     <div class="dropdown">
         <button class="button dropdown-toggle" type="button"
                 data-toggle="dropdown">Order by {{ orderBy }}
             <span class="caret"></span></button>
         <ul class="dropdown-menu">
-            <li><a href="{{ list_url }}/name">Name</a></li>
-            <li><a href="{{ list_url }}/email">Email</a></li>
-            <li><a href="{{ list_url }}/date">Date</a></li>
+            <li><a href="./admin?order_by=name">Name</a></li>
+            <li><a href="./admin?order_by=email">Email</a></li>
+            <li><a href="./admin?order_by=date">Date</a></li>
         </ul>
     </div>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th href="test">Name</th>
-            <th href="test">Email</th>
-            <th href="test">Categories</th>
-            <th href="test">Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Categories</th>
+            <th>Date</th>
             <th>Edit</th>
             <th>Remove</th>
         </tr>
@@ -51,13 +54,13 @@
         <tbody>
         {% for sub in subscriptions %}
             <tr>
-                <td style='display: none;'><input name='name'
+                <td style='display: none;'><input class="real" name='name'
                                                   value="{{ sub.name }}"></td>
-                <td>{{ sub.name }}</td>
+                <td><input type="text" name="fake" value="{{ sub.name }}" class="fake-input"></td>
 
-                <td style='display: none;'><input name='email'
+                <td style='display: none;'><input class="real" name='email'
                                                   value="{{ sub.email }}"></td>
-                <td>{{ sub.email }}</td>
+                <td><input type="text" name="fake" value="{{ sub.email }}" class="fake-input"></td>
                 <td>
                     {% for cat in sub.categories %}
                         {{ cat.name }};
@@ -65,11 +68,17 @@
                 </td>
                 <td>{{ sub.registered }}</td>
                 <td class="edit">
-                    <img src="{{ request.static_url('subscriptions:static/edit.png') }}">
-                    </a>
+                    <div class="edit-div">
+                        <img src="{{ request.static_url('subscriptions:static/edit.png') }}">
+                    </div>
                 </td>
-                <td id="delete"><a
-                        href="{{ list_url }}/remove/{{ sub.id }}">X</a></td>
+                <td class="delete">
+                    <div class="delete-div">
+                        <a
+                        href="admin/remove/{{ sub.id }}">X
+                        </a>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
@@ -99,20 +108,15 @@
                 $(this).css('margin-left', '30px');
             });
         }
-    });
-
-
-    $('.edit').hover(function () {
-        $(this).css('cursor', 'pointer');
-    });
+    }); 
 
     var name_field;
     var email_field;
 
     var current_class;
 
-    $('.edit').click(function (e) {
-        current_class = $(this);
+    $('.edit-div').click(function (e) {
+        current_class = $(this).parent();
         name_field = current_class.parent().children(':first-child');
         email_field = current_class.parent().children(':nth-child(3)');
 
@@ -128,12 +132,12 @@
             email_field.next().hide();
 
         } else {
-            var name = name_field.find("input").val();
-            var email = email_field.find("input").val();
+            var name = name_field.find(".real").val();
+            var email = email_field.find(".real").val();
 
-            var id = current_class.siblings('#delete').find('a').attr('href').slice(-1);
+            var id = current_class.siblings('.delete').find('a').attr('href').slice(-1);
 
-            var url = "{{ list_url }}/edit/" + id;
+            var url = "admin/edit/" + id;
 
             var changes = {};
 
@@ -182,7 +186,7 @@
 
                             setTimeout(function () {
                                 current_class.parent().after("<tr class='error' style='color: red;" +
-                                        " text-align: center'> <td>" + nameError + "</td><td>" + emailError + "</td> </tr>");
+                                        " text-align: center'> <td>" + nameError + "</td><td>" + emailError + "</td> <td></td><td></td><td></td><td></td></tr>");
                             }, 100);
 
                         }
