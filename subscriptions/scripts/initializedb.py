@@ -17,7 +17,7 @@ from ..models import (
     get_session_factory,
     get_tm_session,
 )
-from ..models import Admin, Subscriber, Category
+from ..models import Admin, Subscriber, Category, User
 
 
 def usage(argv):
@@ -42,6 +42,10 @@ def main(argv=sys.argv):
 
     with transaction.manager:
         dbsession = get_tm_session(session_factory, transaction.manager)
+
+        editor = User(name='editor', role='editor')
+        editor.set_password('editor')
+        dbsession.add(editor)
 
         categories = [
             'Politics',
