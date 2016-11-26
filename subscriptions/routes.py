@@ -4,6 +4,7 @@ def includeme(config):
                     renderer='scss', request_method='GET')
     config.add_static_view('static', 'static', cache_max_age=3600)
     config.add_route('login', '/login')
+    config.add_route('chat', '/chat')
     config.add_route('logout', '/logout') 
     config.add_route('delete', '/admin/remove/{id}')
     config.add_route('edit_form', '/admin/edit/{id}')

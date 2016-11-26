@@ -15,7 +15,7 @@ from pyramid.view import (
 )
 
 @view_config(route_name='register_view',
-             renderer='../templates/register.jinja2')
+             renderer='../templates/chat.jinja2')
 def register_view(request):
     categories = request.dbsession.query(Category)
 

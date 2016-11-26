@@ -2,6 +2,8 @@ log
 env
 __pycache__
 .idea
+*.map
+env
 *.pyc
 *.orig
 .sass-cache
