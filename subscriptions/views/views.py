@@ -7,15 +7,20 @@ from pyramid.response import Response
 
 from sqlalchemy.exc import DBAPIError
 
-
 from ..models import Subscriber, Category, User
 from pyramid.view import (
     view_config,
     view_defaults,
 )
 
+
+@view_config(route_name='chat', renderer='../templates/chat.jinja2')
+def chat_view(request):
+    return {"result": "ok"}
+
+
 @view_config(route_name='register_view',
-             renderer='../templates/chat.jinja2')
+             renderer='../templates/register.jinja2')
 def register_view(request):
     categories = request.dbsession.query(Category)
 
@@ -87,7 +92,8 @@ def edit_form(request):
 
     if errors != {}:
         # show the errors and retain the inputs
-        return {'errors': errors, 'name': name, 'email': email, 'success': False}
+        return {'errors': errors, 'name': name, 'email': email,
+                'success': False}
 
     else:
         # if inputs correct, try to save subscription and load a fresh form
@@ -118,7 +124,7 @@ def admin_view(request):
     if user is None or (user.role != 'editor' and page.creator != user):
         raise HTTPForbidden
     try:
-        #check if order_by parameter is present and if it is, return ordered list
+        # check if order_by parameter is present and if it is, return ordered list
         orderBy = request.params['order_by']
         if orderBy == 'date':
             subscriptions = request.dbsession.query(Subscriber).order_by(
@@ -133,10 +139,11 @@ def admin_view(request):
         # If order_by parameter not given in URL, sort by name by default
         orderBy = 'name'
         subscriptions = request.dbsession.query(Subscriber).order_by(
-                "name").all()
+            "name").all()
 
     return {'subscriptions': subscriptions, 'errors': False, 'success': False,
-            'admin_url': admin_url, 'orderBy':orderBy} 
+            'admin_url': admin_url, 'orderBy': orderBy}
+
 
 @view_config(route_name='delete', renderer='../templates/admin.jinja2')
 def delete(request):
