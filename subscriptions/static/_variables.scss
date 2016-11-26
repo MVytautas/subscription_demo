@@ -1,0 +1,32 @@
+@font-face {
+    font-family: 'robotoregular'; /*a name to be used later*/
+    src: url('fonts/roboto-regular-webfont.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'robotomedium'; /*a name to be used later*/
+    src: url('fonts/roboto-medium-webfont.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'robotolight'; /*a name to be used later*/
+    src: url('fonts/roboto-light-webfont.ttf'); /*URL to font*/
+}
+
+@font-face {
+    font-family: 'robotothin'; /*a name to be used later*/
+    src: url('fonts/roboto-thin.ttf'); /*URL to font*/
+}
+
+$primary-font-family:'Roboto', sans-serif;
+$secondary-font-family: "Times New Roman", serif;
+
+$regular: 'robotoregular', sans-serif;
+$medium: 'robotomedium', sans-serif;
+$light: 'robotolight', sans-serif;
+$thin: 'robotothin', sans-serif;
+
+$primary-green: #0ebe86;
+$primary-violet: #9f0ebe;
+
+

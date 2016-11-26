@@ -1,9 +1,120 @@
+@import "_variables.scss";
+@import "_base.scss";
+
 body {
-  height: 400px;
-  position: fixed;
+  background-color: white;
+  margin: 0 auto;
   bottom: 0;
-  background-image: url('background.png');
 }
+
+.wrapper {
+  min-height: 800px;
+}
+
+.navbar {
+  height: 140px;
+  background-color: white;
+}
+
+.logo {
+  background-image: url('logo.jpg');
+  background-repeat: no-repeat;
+  // todo image to orig size
+  height: 66px;
+  width: 345px;
+  margin: 50px 0 33px 65px;
+  display: inline-block;
+}
+
+.top-menu {
+  font-family: $light;
+  text-transform: uppercase;
+  float: right !important;
+  margin: 66px 86px 0 50px !important;
+  font-size: 26px;
+}
+
+.top-menu > li > a {
+  color: #9F0EBE !important;
+}
+
+.title-image {
+  background-image: url('background.png');
+  background-repeat: no-repeat;
+  min-height: 800px;
+  height: 1030px;
+
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+
+  display: flex;
+  align-items: center;
+}
+
+.center-div {
+  font-family: $regular;
+  font-size: 67px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.upper-text {
+  font-family: $light;
+  padding-top: 30px;
+  font-size: 85px;
+}
+
+.center-text {
+  padding-top: 30px;
+  text-transform: uppercase;
+  font-size: 80px;
+  font-family: robotomedium;
+}
+
+.lower-text {
+  font-family: $thin;
+  padding-top: 48px;
+  font-family: robotolight;
+}
+
+.comment {
+  text-transform: uppercase;
+  font-size: 40px;
+  padding-top: 142px;
+}
+
+.start-button {
+  background-image: url('start-button.png');
+  background-repeat: no-repeat;
+  height: 120px;
+  width: auto;
+  margin-top: 40px;
+}
+
+.center-text > ul > li {
+  display: inline;
+}
+
+.avatar {
+
+  background-image: url('launchform-avatar.gif');
+  background-repeat: no-repeat;
+  height: 1000px;
+  width: auto;
+}
+
+.chatbot-form {
+
+  background-image: url('chatbot_form.png');
+  background-repeat: no-repeat;
+  height: 1000px;
+  width: auto;
+
+}
+
+// chatbot snippet
 
 .col-md-2, .col-md-10 {
   padding: 0;

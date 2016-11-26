@@ -6,17 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="pyramid web application">
     <meta name="author" content="Tomas Giedraitis">
+
+    <link rel="shortcut icon"
+          href="{{ request.static_url('subscriptions:static/subscribe-32x32.png') }}">
+
+    <link rel="stylesheet"
+          href="{{ request.static_url('subscriptions:static/chat.css') }}">
+
     <link rel="shortcut icon"
           href="{{ request.static_url('subscriptions:static/subscribe-32x32.png') }}">
     <link rel="stylesheet"
           href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="subscriptions/scripts/chat.js"></script>
     <title>View list of subscriptions</title>
 
     <!-- Custom styles for this scaffold -->
-    <link href="{{ request.static_url('subscriptions:static/main.css') }}"
-          rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -24,43 +30,11 @@
     <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
+
 <body>
 
-    <a href="/">
-        <div class="logo"></div>
-    </a>
-{#    <ul class="nav navbar-nav top-menu">#}
-{#        <li><a href="#how-it-works">How it works?</a></li>#}
-{#        <li><a href="#">Prices</a></li>#}
-{#        <li><a href="#">Partners</a></li>#}
-{#        <li><a href="/login">Login</a></li>#}
-{#    </ul>#}
+<div class="mock"><img src="{{ request.static_url('subscriptions:static/mock.jpg') }}"></div>
 
-
-<div class="box-login">
-    <p>
-        <strong>
-            Login
-        </strong><br>
-        {{ message }}
-    </p>
-    <form action="{{ url }}" method="post">
-        <input type="hidden" name="next" value="{{ next_url }}">
-        <div class="form-group">
-            <label for="login">Username</label>
-            <input type="text" name="login" value="{{ login }}">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password">
-        </div>
-        <div class="form-group">
-            <button type="submit" name="form.submitted" value="Log In"
-                    class="btn btn-default">Log In
-            </button>
-        </div>
-    </form>
-</div>
 
 </body>
 </html>

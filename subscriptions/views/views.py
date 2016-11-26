@@ -18,6 +18,9 @@ from pyramid.view import (
 def chat_view(request):
     return {"result": "ok"}
 
+@view_config(route_name='mock', renderer='../templates/mock.jinja2')
+def mock_view(request):
+    return {"result": "ok"}
 
 @view_config(route_name='register_view',
              renderer='../templates/register.jinja2')
