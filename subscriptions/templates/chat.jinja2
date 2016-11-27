@@ -12,6 +12,8 @@
 
     <link rel="stylesheet"
           href="{{ request.static_url('subscriptions:static/chat.css') }}">
+    <link rel="stylesheet"
+          href="{{ request.static_url('subscriptions:static/quiz.css') }}">
 
     <link rel="shortcut icon"
           href="{{ request.static_url('subscriptions:static/subscribe-32x32.png') }}">
@@ -22,7 +24,105 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script scr="{{ request.static_url('subscriptions:static/chat.js') }}"></script>
+    <script scr="{{ request.static_url('subscriptions:static/quiz.js') }}"></script>
     <title>View list of subscriptions</title>
+
+
+    <script>
+        
+        $(window).ready(function(){
+    var left, width, cont = "#q-cont";
+    $('span').click(function(){
+        $(this).css("background","#5a6");
+        $('.re').css("background","#d90");
+        next();
+    });
+    $('.re').click(function(){
+        $(".op").css("background","#d90");
+        $('.re').css("background","#5a6");
+        $(cont).css("left", "0px");
+    });
+    function next() {
+        width = $(cont).width()/4;
+        left = $(cont).css("left").slice(0,-2)*1;
+        left -= width;
+        $(cont).css("left", left+"px");
+    }
+});
+    </script>
+
+    <style>
+        @import '//fonts.googleapis.com/css?family=Lato';
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+body {
+    background: #ddd;
+    margin: 0;
+    overflow-x: hidden;
+    font-family: 'Lato', sans-serif;
+}
+#q-cont {
+    width: 400%;
+    height: 300px;
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    transform: translateY(-150px);
+    transition: 0.5s 500ms;
+}
+.slide {
+    height: 100%;
+    width: 25%;
+    padding: 30px;
+    display: inline-block;
+    vertical-align: top;
+    border-left: solid 30px #ddd;
+    border-right: solid 30px #ddd;
+}
+.question {
+    width: 100%;
+    font-size: 2em;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.question:before {
+    content: "Q. ";
+}
+.options {
+    width: 350px;
+    margin: 0 auto;
+}
+.op, .re {
+    margin-top: 20px;
+    display: inline-block;
+    line-height: 3em;
+    text-align: center;
+    background: #d90;
+    border-radius: 20px;
+    color: #fff;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.op {
+    width: 45%;
+}
+.re {
+    font-size: 0.5em;
+    width: 200px;
+    display: block;
+    margin: 10px auto;
+}
+.op2 {
+    float: right;
+}
+#slide4 {
+    text-align: center;
+    padding-top: 30px;
+    font-size: 3em;
+}
+    </style>
 
     <!-- Custom styles for this scaffold -->
 
@@ -221,5 +321,67 @@
 
 
 </div>
+<div class="container2">
+    <div id="q-cont">
+  <div class="slide" id="slide1">
+    <div class="question">
+      Hey, my name is Pabo!
+I am your personal design & development expert. I can build you a Website, Mobile App, Chatbot or Software! I'll ask you a few questions to do that.
+You can always change your answers if you change your mind! ☺
+So, what you would like me to develop?
+    </div>
+    <div class="options">
+      <span class="op" for="q1op1">Website</span><span class="op op2" for="q1op2">Mobile app</span><br /><span class="op" for="q1op3">Chat bot</span><span class="op op2" for="q1op4">Software</span>
+    </div>
+  </div>
+  <div class="slide" id="slide2">
+    <div class="question">
+      So, what do you need a website for? ☺
+    </div>
+    <div class="options">
+      <span class="op" for="q2op1">To sell services</span><span class="op op2" for="q2op2">To sell products</span><br /><span class="op" for="q2op3">To start a blog</span>
+    </div>
+  </div>
+  <div class="slide" id="slide3">
+    <div class="question">
+      Do you sell more than one product / services (depends on the previous answer)?
+    </div>
+    <div class="options">
+      <span class="op" for="q3op1">Only one</span><span class="op op2" for="q3op2">More than one</span><br />
+    </div>
+  </div>
+  <div class="slide" id="slide4">
+    <div class="question">
+      Is your product already known to people or something new and different?
+    </div>
+    <div class="options">
+      <span class="op" for="q3op1">Yes, it needs explaining</span><span class="op op2" for="q3op2">No, its known</span><br />
+    </div>
+  </div>
+  <div class="slide" id="slide5">
+    <div class="question">
+      Is there a product that is more popular among your clients than others?
+    </div>
+    <div class="options">
+      <span class="op" for="q3op1">Only one</span><span class="op op2" for="q3op2">More than one</span><br />
+    </div>
+  </div>
+  <div class="slide" id="slide6">
+    <div class="question">
+      Do you sell more than one product / services (depends on the previous answer)?
+    </div>
+    <div class="options">
+      <span class="op" for="q3op1">Only one</span><span class="op op2" for="q3op2">More than one</span><br />
+    </div>
+  </div>
+  <div class="slide" id="slide7">
+    Well Done!
+    <div class="re">
+      Reset
+    </div>
+  </div>
+</div>
+</div>
+
 </body>
 </html>
