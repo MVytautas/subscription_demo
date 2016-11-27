@@ -119,12 +119,12 @@ body {
   position: absolute; }
 
 .form-block {
-  height: 1200px; }
+  height: 8000px; }
 
 .chatbot-form {
   position: relative;
   background-color: #a6a4a7;
-  height: 850px;
+  height: 7000px;
   width: 1350px;
   margin: auto;
   margin-top: -100px;
@@ -142,6 +142,11 @@ body {
   width: 1600px;
   margin-top: 20px;
   background-color: #3a87ad; }
+
+.container2 {
+  position: relative;
+  margin: auto;
+  height: auto; }
 
 .col-md-2, .col-md-10 {
   padding: 0; }

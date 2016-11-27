@@ -108,8 +108,12 @@ body {
   position: absolute;
 }
 
+
+
+
 .form-block {
-  height: 1200px;
+  //height: 1200px;
+  height: 8000px;
   //width: auto;
 }
 
@@ -121,7 +125,8 @@ body {
 
   position: relative;
   background-color: #a6a4a7;
-  height: 850px;
+  //height: 850px;
+  height: 7000px;
   //width: auto;
   width: 1350px;
   margin: auto;
@@ -146,7 +151,11 @@ body {
 }
 
 
-
+.container2 {
+  position: relative;
+  margin: auto;
+  height: auto;
+}
 
 
 
@@ -294,6 +303,14 @@ img {
   left: 0px;
   bottom: 0;
 }
+
+
+
+
+
+
+
+
 
 
 
