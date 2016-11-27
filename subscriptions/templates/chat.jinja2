@@ -37,12 +37,12 @@
         $('.re').css("background","#5a6");
         $(cont).css("left", "0px");
     });
-    function next() {
-        width = $(cont).width()/4;
-        left = $(cont).css("left").slice(0,-2)*1;
-        left -= width;
-        $(cont).css("left", left+"px");
-    }
+{#    function next() {#}
+{#        width = $(cont).width()/4;#}
+{#        left = $(cont).css("left").slice(0,-2)*1;#}
+{#        left -= width;#}
+{#        $(cont).css("left", left+"px");#}
+{#    }#}
 });
     </script>
 
@@ -73,8 +73,8 @@ body {
 
 .slide {
     height: auto;
-    width: auto;
-    padding: 30px;
+    width: 1200px;
+{#    padding: 30px;#}
     display: inline-block;
     vertical-align: top;
     border-left: solid 30px #ddd;
@@ -101,7 +101,7 @@ body {
     display: inline-block;
     line-height: 3em;
     text-align: center;
-    background: #d90;
+    background: #0ebe86;
     border-radius: 20px;
     color: #fff;
     transition: 0.2s;
@@ -121,8 +121,8 @@ body {
 }
 #slide4 {
     text-align: center;
-    padding-top: 30px;
-    font-size: 3em;
+{#    padding-top: 30px;#}
+{#    font-size: 3em;#}
 }
     </style>
 
@@ -172,7 +172,9 @@ body {
     <div class="avatar" id="chatbot"></div>
     <div class="chatbot-form">
 
-        <div class="chat-field"></div>
+{#        <div class="chat-field"></div>#}
+
+
 {##}
 {##}
 {#        <div class="container">#}
@@ -328,7 +330,6 @@ body {
 
 
 
-<div class="container2">
     <div id="q-cont">
   <div class="slide" id="slide1">
     <div class="question">
@@ -483,7 +484,6 @@ So, what you would like me to develop?
      Reset
    </div>
  </div>
-</div>
 </div>
 
 
