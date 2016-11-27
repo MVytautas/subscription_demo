@@ -108,14 +108,24 @@ body {
   position: absolute;
 }
 
+.form-block {
+  height: 1200px;
+  //width: auto;
+}
+
+
+
+
+
 .chatbot-form {
 
   position: relative;
   background-color: #a6a4a7;
   height: 850px;
+  //width: auto;
   width: 1350px;
   margin: auto;
-  margin-top: 255px;
+  margin-top: -100px;
   border-radius: 25px;
   padding: 40px 67px 65px 52px;
 }
@@ -226,8 +236,8 @@ img {
 }
 
 .avatar {
-  //position: relative;
-  position: absolute;
+  position: relative;
+  margin-left: 38%;
 }
 
 .base_receive > .avatar:after {
