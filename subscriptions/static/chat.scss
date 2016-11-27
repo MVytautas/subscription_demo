@@ -123,15 +123,14 @@ body {
 
 .chatbot-form {
 
+
   position: relative;
   //background-color: #a6a4a7;
   background-color: #dddddd;
-  //height: 850px;
-  height: 7000px;
+
   //width: auto;
   width: 1350px;
   margin: auto;
-  margin-top: -100px;
   border-radius: 25px;
   padding: 40px 67px 65px 52px;
 }
@@ -247,7 +246,7 @@ img {
 
 .avatar {
   position: relative;
-  margin-left: 38%;
+  margin-left: 35%;
 }
 
 .base_receive > .avatar:after {
