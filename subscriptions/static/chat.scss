@@ -54,16 +54,14 @@ body {
 }
 
 .center-div {
-  font-family: $regular;
-  font-size: 67px;
   text-align: center;
   margin: 0 auto;
 }
 
 .upper-text {
-  font-family: $light;
-  padding-top: 30px;
-  font-size: 85px;
+  margin-top: 250px;
+  font-family: $thin;
+  font-size: 90px;
 }
 
 .center-text {
@@ -74,6 +72,7 @@ body {
 }
 
 .lower-text {
+  font-size: 80px;
   font-family: $thin;
   padding-top: 48px;
   font-family: robotolight;
@@ -81,8 +80,9 @@ body {
 
 .comment {
   text-transform: uppercase;
-  font-size: 40px;
-  padding-top: 142px;
+  font-size: 35px;
+  margin-top: 80px;
+  font-family: $light;
 }
 
 .start-button {
@@ -90,7 +90,8 @@ body {
   background-repeat: no-repeat;
   height: 120px;
   width: auto;
-  margin-top: 40px;
+  margin-top: 55px;
+  margin-left: 40%;
 }
 
 .center-text > ul > li {
@@ -101,20 +102,29 @@ body {
 
   background-image: url('launchform-avatar.gif');
   background-repeat: no-repeat;
-  height: 1000px;
+  height: 450px;
   width: auto;
+  z-index: 2;
+  position: absolute;
 }
 
 .chatbot-form {
 
-  background-image: url('chatbot_form.png');
-  background-repeat: no-repeat;
-  height: 1000px;
-  width: auto;
-
+  background-color: #a6a4a7;
+  height: 850px;
+  width: 1350px;
+  margin: auto;
+  margin-top: 255px;
+  border-radius: 25px;
+  padding: 40px 67px 65px 52px;
 }
 
-// chatbot snippet
+.chat-field {
+  width: 530px;
+  background-color: white;
+  height: 44px;
+  border-radius: 12px;
+}
 
 .col-md-2, .col-md-10 {
   padding: 0;
