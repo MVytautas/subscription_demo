@@ -125,14 +125,12 @@ body {
 
 
   position: relative;
-  //background-color: #a6a4a7;
   background-color: #dddddd;
-
-  //width: auto;
   width: 1350px;
   margin: auto;
   border-radius: 25px;
   padding: 40px 67px 65px 52px;
+  height: 1000px;
 }
 
 .chat-field {
@@ -246,7 +244,7 @@ img {
 
 .avatar {
   position: relative;
-  margin-left: 35%;
+  margin-left: 39%;
 }
 
 .base_receive > .avatar:after {
