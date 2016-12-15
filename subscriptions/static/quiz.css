@@ -1,3 +1,35 @@
+@font-face {
+  font-family: 'robotoregular';
+  /*a name to be used later*/
+  src: url("fonts/roboto-regular-webfont.ttf");
+  /*URL to font*/ }
+@font-face {
+  font-family: 'robotomedium';
+  /*a name to be used later*/
+  src: url("fonts/roboto-medium-webfont.ttf");
+  /*URL to font*/ }
+@font-face {
+  font-family: 'robotolight';
+  /*a name to be used later*/
+  src: url("fonts/roboto-light-webfont.ttf");
+  /*URL to font*/ }
+@font-face {
+  font-family: 'robotothin';
+  /*a name to be used later*/
+  src: url("fonts/roboto-thin.ttf");
+  /*URL to font*/ }
+html body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%; }
+
+.wrapper {
+  background-color: white; }
+  @media (min-width: 764px) {
+    .wrapper {
+      min-height: 830.8px; } }
+
 *, *:before, *:after {
   box-sizing: border-box; }
 
@@ -6,6 +38,13 @@ body {
   margin: 0;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif; }
+
+#hi {
+  background-image: url("hi.png");
+  background-repeat: no-repeat;
+  height: 160px;
+  width: auto;
+  margin-left: 46%; }
 
 .slide {
   height: auto;

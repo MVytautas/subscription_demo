@@ -1,3 +1,7 @@
+@import "_variables.scss";
+@import "_base.scss";
+
+
 *, *:before, *:after {
   box-sizing: border-box;
 }
@@ -7,6 +11,14 @@ body {
   margin: 0;
   overflow-x: hidden;
   font-family: 'Lato', sans-serif;
+}
+
+#hi {
+  background-image: url('hi.png');
+  background-repeat: no-repeat;
+  height: 160px;
+  width: auto;
+  margin-left: 46%;
 }
 
 .slide {

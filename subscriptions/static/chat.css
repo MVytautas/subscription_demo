@@ -103,9 +103,13 @@ body {
   background-image: url("start-button.png");
   background-repeat: no-repeat;
   height: 120px;
-  width: auto;
+  width: 255px;
   margin-top: 55px;
-  margin-left: 40%; }
+  margin-left: 40%;
+  padding-bottom: 20px; }
+
+.start-button:hover {
+  opacity: 0.9; }
 
 .center-text > ul > li {
   display: inline; }
